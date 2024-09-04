@@ -2,6 +2,7 @@ import "./App.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 //import Login from './component/login/';
 import LoginUser from "./component/LoginUser";
+import { PageLayout } from "./component/PageLayout";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       </Routes>
     </BrowserRouter> */
 
-    <LoginUser/>
+    <PageLayout/>
   )
 }
 
