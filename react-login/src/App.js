@@ -1,18 +1,33 @@
 import "./App.css"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-//import Login from './component/login/';
+import React from "react";
+import { useIsAuthenticated } from "@azure/msal-react";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom"
 import LoginUser from "./component/LoginUser";
-import { PageLayout } from "./component/PageLayout";
+import HomePage from "./HomePage";
+//import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
-  return (
-   /* <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login/>} />
-      </Routes>
-    </BrowserRouter> */
+  const isAuthenticated = useIsAuthenticated();
 
-    <PageLayout/>
+  if (!isAuthenticated) {
+    return <LoginUser/>
+  }
+
+  return (
+    <React.StrictMode>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            // <ProtectedRoute>
+              <HomePage />
+            // </ProtectedRoute>
+          } />
+          <Route path="/login" element={<LoginUser/>} />
+        </Routes>
+      </BrowserRouter>
+    </React.StrictMode>
+
+
   )
 }
 

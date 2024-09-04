@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-//import { loginUser } from '../../api/api-middleware';
-//import defaultExport from 'module'
+import { useMsal } from "@azure/msal-react";
+import { loginRequest } from "../authConfig";
+
 
 import {Box, Button,Checkbox,Container,FormControlLabel, Grid, Link, TextField, Typography,   } from '@mui/material';
-import {  GoogleLoginButton,  MicrosoftLoginButton, AppleLoginButton } from 'react-social-login-buttons';
+import { GoogleLoginButton,  MicrosoftLoginButton, AppleLoginButton } from 'react-social-login-buttons';
 
 
    
@@ -12,6 +13,9 @@ import {  GoogleLoginButton,  MicrosoftLoginButton, AppleLoginButton } from 'rea
      email: '',
      password: '',
     });
+
+    const { instance } = useMsal();
+
     const getData = (e) => {
      const { value, name } = e.target;
      setFormValues(() => {
@@ -30,6 +34,12 @@ import {  GoogleLoginButton,  MicrosoftLoginButton, AppleLoginButton } from 'rea
     function googleAuthentication(e) {
       alert('Google sign in')
     }
+
+    function handleMicrosoftLogin() {
+      instance.loginRedirect(loginRequest).catch((e) => {
+          console.log(e);
+        });
+    };
    
     return (
      <>
@@ -84,7 +94,7 @@ import {  GoogleLoginButton,  MicrosoftLoginButton, AppleLoginButton } from 'rea
             container display="flex" justifyContent="center" alignItems="center" className="mb-3">   
             <GoogleLoginButton onClick={() => googleAuthentication} />
             <AppleLoginButton onClick={() => alert('Facebook sign in')} />
-            <MicrosoftLoginButton onClick={() => alert('Microsoft sign in')} />    
+            <MicrosoftLoginButton onClick={() => handleMicrosoftLogin()} />    
         </Grid>    
         <br></br>
 
